@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Login Form</title>
+<style>
+body{
+ background-color: rgb(67, 119, 67);   
+}
+.container{
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:  10px;
+    margin-bottom: 20px;
+}
+.login-box{
+    background-color: rgb(135, 189, 141);
+    width: 405px;
+    height: 391px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    
+}
+
+label{
+    height: 30px;
+    margin-left: 6px;
+    margin-right: 82px;
+    margin-bottom: 14px;
+    
+    font-family: 'Times New Roman', sans-serif;
+}
+input{
+    height: 30px;
+    width: 180px;
+    margin-bottom: 30px;
+}
+#name{
+    margin-left: 24px;
+}
+#email{
+    margin-left: 25px;
+}
+#dob{
+    margin-left: -23px;
+}
+#check{
+    margin-left: 1px;
+}
+#acceptTerms{
+    width: 13px;
+    margin-left: -73px;
+}
+button{
+    margin-top: auto;
+    margin-left: 6px;
+    margin-bottom: 2px;
+    background-color: black;
+    color: white;
+}
+#tab1{
+    position: relative;
+    background-color: rgb(174, 235, 206);
+    padding: 10px 6px 8px 6px;
+    margin-top: 5px;
+    box-shadow: 0 25px 50px -12px rgb(174, 235, 206);
+    border-width: 1px;
+    border-color: rgb(174, 235, 206);
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    
+}
+#table2{
+    margin: auto;
+}
+#table3{
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+td{
+    border-width: 1px;
+    /* border-left-width: 0px; */
+    border-style: solid;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-color: rgb(174, 235, 206);
+    font-family: 'Times New Roman', sans-serif;
+
+}
+th{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    
+}
+</style>
+<script>
+let loginform = document.getElementById("loginform");
+const dobint = document.getElementById('dob');
+
+dobint.addEventListener('input', (event) => {
+    const dob = new Date(event.target.value);
+    const now = new Date();
+    const age = now.getFullYear() - dob.getFullYear();
+
+    if (age < 18 || age > 55) {
+        dobint.setCustomValidity('Enter a valid date of birth between ages 18 and 55.');
+    }
+    else{
+        dobint.setCustomValidity('');
+    }
+});
+
+const get_details = ()=>{
+    let detail = localStorage.getItem("user_details");
+    if(detail){
+        detail = JSON.parse(detail);
+    }
+    else{
+        detail = [];
+    } 
+    return detail;
+}
+let data = get_details();
+
+const showdetails =()=>{
+    const detail = get_details();
+    const tableentries = detail.map((entry)=>{
+        const nameCell = `<td>${entry.name}</td>`;
+        const emailCell = `<td>${entry.email}</td>`;
+        const passwordCell = `<td>${entry.pass}</td>`;
+        const dobCell = `<td>${entry.dob}</td>`;
+        const acceptTermsCell = `<td>${entry.ch}</td>`;
+        const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptTermsCell}</tr>`;
+        return row;
+    }).join("\n");
+
+    const tab = 
+    `<table class="table-auto w-full">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>dob</th>
+            <th>accepted terms?</th>
+        </tr>${tableentries}
+    </table>`;
+
+    let f_details = document.getElementById("user_details");
+    f_details.innerHTML = tab;
+}
+const saveform = (event)=>{
+    event.preventDefault();
+    const name = document.getElementById("name").value; 
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    const dob = document.getElementById("dob").value;
+    const ch = document.getElementById("acceptTerms").checked;
+    const entry = {
+        name,
+        email,
+        pass,
+        dob,
+        ch
+    }
+    data.push(entry);
+    localStorage.setItem("user_details",JSON.stringify(data));
+    showdetails();
+}
+
+loginform.addEventListener("submit",saveform); 
+
+showdetails();
+</script>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <form id="loginform">
+                <h2>Registration Form   </h2>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name">
+                <br>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <br>
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+                <br>
+                
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" name="dob">
+                
+                <br>
+                <label id="check" for="acceptTerms">Accept Terms and Conditions</label>
+                <input type="checkbox" id="acceptTerms" name="acceptTerms">  
+                <br>
+
+                <button id="button" type="submit">Submit</button>
+            </form>
+        </div>
+        <div id ="table1"> 
+            <div id = "table2">
+                <h2 id="table3">Entries</h2>
+                <div id="user_details">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
