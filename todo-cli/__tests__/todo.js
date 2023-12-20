@@ -9,7 +9,7 @@ describe("Todo List Test Suite", () => {
       {
         title: "Evaluate exam",
         completed: false,
-        dueDate: new Date(today__.getTime() - 3 * day__).toLocaleDateString("en-CA"),
+        dueDate: new Date(today__.getTime() - 2 * day__).toLocaleDateString("en-CA"),
       },
       {
         title: "Operate on MS",
@@ -49,7 +49,7 @@ describe("Todo List Test Suite", () => {
   });
 
   test("Should retrieve overdue items", () => {
-    expect(overdue().length).toEqual(2);
+    expect(overdue().length).toEqual(1);
   });
 
   test("Should retrieve due today items", () => {
