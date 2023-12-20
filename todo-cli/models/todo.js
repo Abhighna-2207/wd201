@@ -10,122 +10,60 @@ module.exports = (sequelize, DataTypes) => {
       console.log("My Todo list \n");
 
       console.log("Overdue");
-      const to_do_overdue = await Todo.overdue();
-      const formatted__Overdue = to_do_overdue
+      const todoover__due = await Todo.overdue();
+      const formattedOver__due = todoover__due
         .map((todo) => todo.displayableString())
         .join("\n")
         .trim();
-      console.log(formatted__Overdue);
+      console.log(formattedOver__due);
       console.log("\n");
 
       console.log("Due Today");
-      const todo_due_Today = await Todo.dueToday();
-      const formatted_Due_Today = todo_due_Today
+      const tododue__Today = await Todo.dueToday();
+      const formattedDue__Today = tododue__Today
         .map((todo) => todo.displayableString())
         .join("\n")
         .trim();
-      console.log(formatted_Due_Today);
+      console.log(formattedDue__Today);
       console.log("\n");
 
       console.log("Due Later");
-      const todo_due_Later = await Todo.dueLater();
-      const formatted_Due_Later = todo_due_Later
+      const tododue__Later = await Todo.dueLater();
+      const formattedDue__Later = dueLater
         .map((todo) => todo.displayableString())
         .join("\n")
         .trim();
-      console.log(formatted_Due_Later);
+      console.log(formattedDue__Later);
     }
 
     static async overdue() {
-      const to_do_overdue = await Todo.findAll({
+      const todooverdue = await Todo.findAll({
         where: {
           dueDate: { [Op.lt]: new Date() },
         },
       });
 
-      return to_do_overdue;
+      return todoover__due;
     }
 
     static async dueToday() {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Set time to midnight
-
-      const todo_due_Today = await Todo.findAll({
+      const tododue__Today = await Todo.findAll({
         where: {
-          dueDate: { [Op.eq]: today },
+          dueDate: { [Op.eq]: new Date() },
         },
       });
 
-      return todo_due_Today;
+      return tododue__Today;
     }
 
     static async dueLater() {
-      const todo_due_Later = await Todo.findAll({
+      const tododueLater = await Todo.findAll({
         where: {
           dueDate: { [Op.gt]: new Date() },
         },
       });
 
-      return todo_due_Later;
-    }
-    static async markAsComplete(id) {
-      await Todo.update(
-        {
-          completed: true,
-        },
-        {
-          // eslint-disable-next-line object-shorthand
-          where: { id: id },
-        }
-      );
-    }
-
-
-    displayableString() {
-      const checkbox = this.completed ? "[x]" : "[ ]";
-      let dueDateString="";
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const duedate = new Date(this.dueDate);
-      dueDate.setHours(0, 0, 0, 0);
-
-      if (this.completed || dueDate > today) {
-        dueDateString = dueDate.toISOString().slice(0, 10);
-      }
-
-      return `${this.id}. ${checkbox} ${this.title} ${dueDateString}`;
-
-    }
-  }
-
-  Todo.init(
-    {
-      title: DataTypes.STRING,
-      dueDate: DataTypes.DATE,
-    },
-    {
-      sequelize,
-      modelName: "Todo",
-    }
-  );
-
-  return Todo;
-};
-
-
-      return todo_due_Today;
-    }
-
-    static async dueLater() {
-      const todo_due_Later = await Todo.findAll({
-        where: {
-          dueDate: { [Op.gt]: new Date() },
-        },
-      });
-
-      return todo_due_Later;
+      return tododue__Later;
     }
 
     static async markAsComplete(id) {
@@ -141,20 +79,20 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     displayableString() {
-      const check__box = this.completed ? "[x]" : "[ ]";
-      let due_Date_String="";
+      const check_box = this.completed ? "[x]" : "[ ]";
+      let dueDate__String="";
 
       const todayy = new Date();
       todayy.setHours(0, 0, 0, 0);
 
-      const due_date = new Date(this.dueDate);
+      const duedate = new Date(this.dueDate);
       dueDate.setHours(0, 0, 0, 0);
 
       if (this.completed || dueDate > todayy) {
-        due_Date_String = dueDate.toISOString().slice(0, 10);
+        dueDate__String = dueDate.toISOString().slice(0, 10);
       }
 
-      return `${this.id}. ${check__box} ${this.title} ${due_Date_String}`;
+      return `${this.id}. ${check_box} ${this.title} ${dueDate__String}`;
     }
     
     static associate(models) {
