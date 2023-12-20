@@ -70,9 +70,21 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     displayableString() {
-      // Assuming you have a method to format the task for display
-      // Replace this with your actual displayableString method
-      return `${this.title} - Due: ${this.dueDate}`;
+      const checkbox = this.completed ? "[x]" : "[ ]";
+      let dueDateString="";
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const duedate = new Date(this.dueDate);
+      dueDate.setHours(0, 0, 0, 0);
+
+      if (this.completed || dueDate > today) {
+        dueDateString = dueDate.toISOString().slice(0, 10);
+      }
+
+      return `${this.id}. ${checkbox} ${this.title} ${dueDateString}`;
+
     }
   }
 
