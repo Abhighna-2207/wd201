@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
         due_Date_String = dueDate.toISOString().slice(0, 10);
       }
 
-      return `${this.id}. ${check_box} ${this.title} ${due_Date_String}`;
+      return `${this.id}. ${check__box} ${this.title} ${due_Date_String}`;
     }
     
     static associate(models) {
