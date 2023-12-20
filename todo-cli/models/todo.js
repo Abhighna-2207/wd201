@@ -77,7 +77,6 @@ module.exports = (sequelize, DataTypes) => {
       );
     }
 
-
     displayableString() {
       const checkbox = this.completed ? "[x]" : "[ ]";
       let dueDateString = "";
@@ -88,11 +87,19 @@ module.exports = (sequelize, DataTypes) => {
       const dueDate = new Date(this.dueDate);
       dueDate.setHours(0, 0, 0, 0);
 
+      if (!this.completed && dueDate.getTime() === today.getTime()) {
+        return `${this.id}. ${checkbox} ${this.title}`;
+      }
+
+      if (this.completed && dueDate.getTime() === today.getTime()) {
+        return `${this.id}. ${checkbox} ${this.title}`;
+      }
+
       if (this.completed || dueDate > today) {
         dueDateString = dueDate.toISOString().slice(0, 10);
       }
 
-      return `${this.id}. ${checkbox} ${this.title}`;
+      return `${this.id}. ${checkbox} ${this.title} ${dueDateString}`;
     }
 
     static associate(models) {
@@ -113,3 +120,4 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Todo;
 };
+
