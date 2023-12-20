@@ -8,15 +8,15 @@ const todoList = () => {
   }
 
   const overdue = () => {
-    return all.filter((x) => x.dueDate < new Date().toLocaleDateString("en-CA"));
+    return all.filter((i) => i.dueDate < new Date().toLocaleDateString("en-CA"));
   }
 
   const dueToday = () => {
-    return all.filter((x) => x.dueDate === new Date().toLocaleDateString("en-CA"));
+    return all.filter((i) => i.dueDate === new Date().toLocaleDateString("en-CA"));
   }
 
   const dueLater = () => {
-    return all.filter((x) => x.dueDate > new Date().toLocaleDateString("en-CA"));
+    return all.filter((i) => i.dueDate > new Date().toLocaleDateString("en-CA"));
   }
 
   const toDisplayableList = (list) => {
@@ -42,6 +42,7 @@ const todoList = () => {
     toDisplayableList
   };
 };
+module.exports=todoList;
 
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
