@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 
       console.log("Due Later");
       const todo_due_Later = await Todo.dueLater();
-      const formatted_Due_Later = dueLater
+      const formatted_Due_Later = todo_due_Later
         .map((todo) => todo.displayableString())
         .join("\n")
         .trim();
@@ -47,11 +47,49 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async dueToday() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set time to midnight
+
       const todo_due_Today = await Todo.findAll({
         where: {
-          dueDate: { [Op.eq]: new Date() },
+          dueDate: { [Op.eq]: today },
         },
       });
+
+      return todo_due_Today;
+    }
+
+    static async dueLater() {
+      const todo_due_Later = await Todo.findAll({
+        where: {
+          dueDate: { [Op.gt]: new Date() },
+        },
+      });
+
+      return todo_due_Later;
+    }
+
+    displayableString() {
+      // Assuming you have a method to format the task for display
+      // Replace this with your actual displayableString method
+      return `${this.title} - Due: ${this.dueDate}`;
+    }
+  }
+
+  Todo.init(
+    {
+      title: DataTypes.STRING,
+      dueDate: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: "Todo",
+    }
+  );
+
+  return Todo;
+};
+
 
       return todo_due_Today;
     }
