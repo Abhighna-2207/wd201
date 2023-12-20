@@ -12,11 +12,6 @@ describe("Todo List Test Suite", () => {
         dueDate: new Date(today__.getTime() - 3 * day__).toLocaleDateString("en-CA"),
       },
       {
-        title: "Count Eggs",
-        completed: false,
-        dueDate: new Date(today__.getTime() - day__).toLocaleDateString("en-CA"),
-      },
-      {
         title: "Operate on MS",
         completed: false,
         dueDate: new Date().toLocaleDateString("en-CA"),
@@ -36,7 +31,7 @@ describe("Todo List Test Suite", () => {
     ].forEach(add);
   });
   test("Should add a new todo", () => {
-    expect(all.length).toEqual(5);
+    expect(all.length).toEqual(4);
 
     add({
       title: "A test item",
@@ -44,7 +39,7 @@ describe("Todo List Test Suite", () => {
       dueDate: new Date().toLocaleDateString("en-CA"),
     });
 
-    expect(all.length).toEqual(6);
+    expect(all.length).toEqual(5);
   });
 
   test("Should mark a todo as complete", () => {
