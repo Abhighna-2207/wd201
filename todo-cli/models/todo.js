@@ -68,6 +68,18 @@ module.exports = (sequelize, DataTypes) => {
 
       return todo_due_Later;
     }
+    static async markAsComplete(id) {
+      await Todo.update(
+        {
+          completed: true,
+        },
+        {
+          // eslint-disable-next-line object-shorthand
+          where: { id: id },
+        }
+      );
+    }
+
 
     displayableString() {
       const checkbox = this.completed ? "[x]" : "[ ]";
