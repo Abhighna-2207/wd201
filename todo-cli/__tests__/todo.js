@@ -4,7 +4,7 @@ const { all, markAsComplete, add, overdue, dueToday, dueLater } = todoList();
 describe("Todo List Test Suite", () => {
   beforeAll(() => {
     const today__= new Date();
-    const day__ = 60 * 60 * 24 * 1000;
+    const day__ = 1000 * 60 * 60 * 24 ;
     [
       {
         title: "Evaluate exam",
